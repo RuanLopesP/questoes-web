@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora do Restaurante</title>
+  <style>
+    /* Estilos para formatar a página */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: inline-block;
+      width: 120px;
+    }
+    /* Estilo para o nome do restaurante */
+    h1 {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Restaurante Js</h1>
+  <form id="calculator">
+    <label for="pricePerKg">Buffet por Quilo R$:</label>
+    <input type="number" step="0.01" id="pricePerKg" required><br>
+    <label for="consumption">Consumo (g):</label>
+    <input type="number" id="consumption" required><br>
+    <button type="button" onclick="calculate()">Calcular</button>
+  </form>
+  <p id="result"></p>
+
+  <script>
+    function calculate() {
+      var pricePerKg = parseFloat(document.getElementById("pricePerKg").value);
+      var consumption = parseFloat(document.getElementById("consumption").value);
+
+      if (isNaN(pricePerKg) || isNaN(consumption)) {
+        alert("Por favor, insira valores numéricos válidos.");
+        return;
+      }
+
+      var pricePerGram = pricePerKg / 1000;
+      var totalToPay = pricePerGram * consumption;
+
+      document.getElementById("result").textContent = "Valor a ser pago: R$ " + totalToPay.toFixed(2);
+    }
+  </script>
+</body>
+</html>

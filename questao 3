@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Programa conta do mês</title>
+  <style>
+    /* Estilos para formatar a página */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      font-weight: bold;
+    }
+    label {
+      display: inline-block;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Programa conta do mês</h1>
+  <form id="calculator">
+    <label for="descricaoConta">Descrição da conta:</label>
+    <input type="text" id="descricaoConta" required><br>
+    <label for="valorConta">Valor da conta:</label>
+    <input type="number" step="0.01" id="valorConta" required><br>
+    <button type="button" onclick="adicionarConta()">Adicionar Conta</button>
+  </form>
+  <ul id="listaContas">
+  </ul>
+  <p id="totalValores"></p>
+
+  <script>
+    let contas = [];
+    let acumulador = 0;
+
+    function adicionarConta() {
+      const descricaoConta = document.getElementById("descricaoConta").value;
+      const valorConta = parseFloat(document.getElementById("valorConta").value);
+      
+      if (descricaoConta.trim() === "" || isNaN(valorConta)) {
+        alert("Por favor, preencha uma descrição e digite um valor numérico válido.");
+        return;
+      }
+
+      contas.push({ descricao: descricaoConta, valor: valorConta });
+      acumulador += valorConta;
+
+      document.getElementById("descricaoConta").value = "";
+      document.getElementById("valorConta").value = "";
+      atualizarListaContas();
+      atualizarTotalValores();
+    }
+
+    function atualizarListaContas() {
+      const listaContas = document.getElementById("listaContas");
+      listaContas.innerHTML = "";
+
+      contas.forEach((conta, index) => {
+        const li = document.createElement("li");
+        li.textContent = `Conta ${index + 1}: ${conta.descricao} - R$ ${conta.valor.toFixed(2)}`;
+        listaContas.appendChild(li);
+      });
+    }
+
+    function atualizarTotalValores() {
+      document.getElementById("totalValores").textContent = `Valor total a pagar: R$ ${acumulador.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
